@@ -1,7 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import html2canvas from 'html2canvas';
 
 ChartJS.register(
   CategoryScale,
@@ -20,12 +21,58 @@ interface CalculationResult {
   dataPoints: { year: number; balance: number }[];
 }
 
+const ShareableImage: React.FC<{ results: CalculationResult, inputs: { initialInvestment: number, monthlyContribution: number, annualInterestRate: number, years: number } }> = ({ results, inputs }) => {
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-lg w-[1080px] h-[1080px]" id="shareable-image">
+      <h1 className="text-4xl font-bold mb-6 text-center">Compound Interest Results</h1>
+      <div className="grid grid-cols-2 gap-6 mb-6">
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Inputs</h2>
+          <p>Initial Investment: ${inputs.initialInvestment.toLocaleString()}</p>
+          <p>Monthly Contribution: ${inputs.monthlyContribution.toLocaleString()}</p>
+          <p>Annual Interest Rate: {inputs.annualInterestRate}%</p>
+          <p>Investment Period: {inputs.years} years</p>
+        </div>
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Results</h2>
+          <p>Final Balance: ${results.finalBalance.toLocaleString()}</p>
+          <p>Total Contributions: ${results.totalContributions.toLocaleString()}</p>
+          <p>Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
+        </div>
+      </div>
+      <div className="h-[600px]">
+        <Line
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'top' },
+              title: { display: true, text: 'Compound Interest Growth' },
+            },
+          }}
+          data={{
+            labels: results.dataPoints.map(point => point.year),
+            datasets: [{
+              label: 'Balance',
+              data: results.dataPoints.map(point => point.balance),
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }]
+          }}
+        />
+      </div>
+      <p className="text-center mt-4 text-sm">Generated with CompoundCraft Calculator</p>
+    </div>
+  );
+};
+
 const CompoundInterestCalculator: React.FC = () => {
   const [initialInvestment, setInitialInvestment] = useState<number>(1000);
   const [monthlyContribution, setMonthlyContribution] = useState<number>(100);
   const [annualInterestRate, setAnnualInterestRate] = useState<number>(7);
   const [years, setYears] = useState<number>(10);
   const [results, setResults] = useState<CalculationResult | null>(null);
+  const shareableRef = useRef<HTMLDivElement>(null);
 
   const calculateCompoundInterest = () => {
     let balance = initialInvestment;
@@ -51,6 +98,18 @@ const CompoundInterestCalculator: React.FC = () => {
       dataPoints
     });
   };
+
+  const generateShareableImage = async () => {
+    if (shareableRef.current) {
+      const canvas = await html2canvas(shareableRef.current);
+      const image = canvas.toDataURL("image/png");
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = 'compound-interest-results.png';
+      link.click();
+    }
+  };
+  
 
   const chartData = {
     labels: results?.dataPoints.map(point => point.year) || [],
@@ -123,17 +182,29 @@ const CompoundInterestCalculator: React.FC = () => {
         className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
       >
         Calculate
-      </button>
-      {results && (
-        <div className="mt-6">
-          <h2 className="text-2xl font-bold mb-4">Results</h2>
-          <p>Final Balance: ${results.finalBalance.toLocaleString()}</p>
-          <p>Total Contributions: ${results.totalContributions.toLocaleString()}</p>
-          <p>Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
-          <div className="mt-6 h-80">
-            <Line options={chartOptions} data={chartData} />
+      </button>{results && (
+        <>
+          <div className="mt-6">
+            <h2 className="text-2xl font-bold mb-4">Results</h2>
+            <p>Final Balance: ${results.finalBalance.toLocaleString()}</p>
+            <p>Total Contributions: ${results.totalContributions.toLocaleString()}</p>
+            <p>Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
+            <div className="mt-6 h-80">
+              <Line options={chartOptions} data={chartData} />
+            </div>
           </div>
-        </div>
+          <button
+            onClick={generateShareableImage}
+            className="mt-4 w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
+          >
+            Generate Shareable Image
+          </button>
+          <div>
+            <div ref={shareableRef}>
+              <ShareableImage results={results} inputs={{ initialInvestment, monthlyContribution, annualInterestRate, years }} />
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
