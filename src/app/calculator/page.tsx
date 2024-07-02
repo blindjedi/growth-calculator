@@ -154,11 +154,6 @@ const CompoundInterestCalculator: React.FC = () => {
           >
             Generate Shareable Image
           </button>
-          <div>
-            <div ref={shareableRef}>
-              <ShareableImage results={results} inputs={{ initialInvestment, monthlyContribution, annualInterestRate, years }} />
-            </div>
-          </div>
         </>
       )}
     </div>
