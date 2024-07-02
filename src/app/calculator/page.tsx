@@ -21,51 +21,6 @@ interface CalculationResult {
   dataPoints: { year: number; balance: number }[];
 }
 
-const ShareableImage: React.FC<{ results: CalculationResult, inputs: { initialInvestment: number, monthlyContribution: number, annualInterestRate: number, years: number } }> = ({ results, inputs }) => {
-  return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-[1080px] h-[1080px]" id="shareable-image">
-      <h1 className="text-4xl font-bold mb-6 text-center">Compound Interest Results</h1>
-      <div className="grid grid-cols-2 gap-6 mb-6">
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Inputs</h2>
-          <p>Initial Investment: ${inputs.initialInvestment.toLocaleString()}</p>
-          <p>Monthly Contribution: ${inputs.monthlyContribution.toLocaleString()}</p>
-          <p>Annual Interest Rate: {inputs.annualInterestRate}%</p>
-          <p>Investment Period: {inputs.years} years</p>
-        </div>
-        <div>
-          <h2 className="text-2xl font-semibold mb-4">Results</h2>
-          <p>Final Balance: ${results.finalBalance.toLocaleString()}</p>
-          <p>Total Contributions: ${results.totalContributions.toLocaleString()}</p>
-          <p>Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
-        </div>
-      </div>
-      <div className="h-[600px]">
-        <Line
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { position: 'top' },
-              title: { display: true, text: 'Compound Interest Growth' },
-            },
-          }}
-          data={{
-            labels: results.dataPoints.map(point => point.year),
-            datasets: [{
-              label: 'Balance',
-              data: results.dataPoints.map(point => point.balance),
-              borderColor: 'rgb(75, 192, 192)',
-              tension: 0.1
-            }]
-          }}
-        />
-      </div>
-      <p className="text-center mt-4 text-sm">Generated with CompoundCraft Calculator</p>
-    </div>
-  );
-};
-
 const CompoundInterestCalculator: React.FC = () => {
   const [initialInvestment, setInitialInvestment] = useState<number>(1000);
   const [monthlyContribution, setMonthlyContribution] = useState<number>(100);
