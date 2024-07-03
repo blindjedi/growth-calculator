@@ -2,9 +2,10 @@
 import React, { useState, useRef } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import html2canvas from 'html2canvas';
-import Results from '../ui/calculator/Results';
-import { CalculationResult } from '../ui/calculator/types';
 import InvestmentForm from '../ui/calculator/InvestmentForm';
+import Results from '../ui/calculator/Results';
+import LoadingSkeleton from '../ui/skeletons';
+import { CalculationResult } from '../ui/calculator/types';
 
 ChartJS.register(
   CategoryScale,
@@ -22,30 +23,35 @@ const CompoundInterestCalculator: React.FC = () => {
   const [annualInterestRate, setAnnualInterestRate] = useState<number>(7);
   const [years, setYears] = useState<number>(10);
   const [results, setResults] = useState<CalculationResult | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const shareableRef = useRef<HTMLDivElement>(null);
 
   const calculateCompoundInterest = () => {
-    let balance = initialInvestment;
-    const monthlyRate = annualInterestRate / 12 / 100;
-    const dataPoints: { year: number; balance: number }[] = [];
+    setIsLoading(true);
+    setTimeout(() => {
+      let balance = initialInvestment;
+      const monthlyRate = annualInterestRate / 12 / 100;
+      const dataPoints: { year: number; balance: number }[] = [];
 
-    for (let year = 0; year <= years; year++) {
-      dataPoints.push({
-        year,
-        balance: Math.round(balance)
-      });
+      for (let year = 0; year <= years; year++) {
+        dataPoints.push({
+          year,
+          balance: Math.round(balance)
+        });
 
-      for (let month = 0; month < 12; month++) {
-        balance += monthlyContribution;
-        balance *= (1 + monthlyRate);
+        for (let month = 0; month < 12; month++) {
+          balance += monthlyContribution;
+          balance *= (1 + monthlyRate);
+        }
       }
-    }
 
-    setResults({
-      finalBalance: Math.round(balance),
-      totalContributions: initialInvestment + (monthlyContribution * 12 * years),
-      totalInterest: Math.round(balance - initialInvestment - (monthlyContribution * 12 * years)),
-      dataPoints
+      setResults({
+        finalBalance: Math.round(balance),
+        totalContributions: initialInvestment + (monthlyContribution * 12 * years),
+        totalInterest: Math.round(balance - initialInvestment - (monthlyContribution * 12 * years)),
+        dataPoints
+      });
+      setIsLoading(false);
     });
   };
 
@@ -99,16 +105,23 @@ const CompoundInterestCalculator: React.FC = () => {
         setYears={setYears}
         onCalculate={calculateCompoundInterest}
       />
-      {results && (
-        <Results
-          results={results}
-          chartData={chartData}
-          chartOptions={chartOptions}
-          generateShareableImage={generateShareableImage}
-        />
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        results ? (
+          <Results
+            results={results}
+            chartData={chartData}
+            chartOptions={chartOptions}
+            generateShareableImage={generateShareableImage}
+          />
+        ) : (
+          <LoadingSkeleton />
+        )
       )}
     </div>
   );
 };
+
 
 export default CompoundInterestCalculator;
