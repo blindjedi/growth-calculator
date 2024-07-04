@@ -18,10 +18,10 @@ ChartJS.register(
 );
 
 const CompoundInterestCalculator: React.FC = () => {
-  const [initialInvestment, setInitialInvestment] = useState<number>(1000);
-  const [monthlyContribution, setMonthlyContribution] = useState<number>(100);
-  const [annualInterestRate, setAnnualInterestRate] = useState<number>(7);
-  const [years, setYears] = useState<number>(10);
+  const [initialInvestment, setInitialInvestment] = useState<number | string>(1000);
+  const [monthlyContribution, setMonthlyContribution] = useState<number | string>(100);
+  const [annualInterestRate, setAnnualInterestRate] = useState<number | string>(7);
+  const [years, setYears] = useState<number | string>(10);
   const [results, setResults] = useState<CalculationResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const shareableRef = useRef<HTMLDivElement>(null);
