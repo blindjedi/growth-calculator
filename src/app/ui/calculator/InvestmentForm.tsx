@@ -95,7 +95,7 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({
       <button
         onClick={onCalculate}
         className={clsx(
-          "col-span-1 md:col-span-2 w-full p-2 rounded", // Base Classes
+          "col-span-1 md:col-span-2 w-full p-2 rounded mt-2", // Base Classes
           {
             // Conditional Classes
             "bg-gray-500 text-gray-300 cursor-not-allowed": !!initialInvestmentError ||
