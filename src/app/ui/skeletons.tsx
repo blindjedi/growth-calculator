@@ -10,7 +10,6 @@ const LoadingSkeleton: React.FC = () => {
         <p className="text-center text-xl bg-gray-300 h-6 w-56 mx-auto rounded mb-4"></p>
         <div className="mt-12 h-80 bg-gray-300 rounded"></div>
       </div>
-      <button className="mt-4 w-full bg-gray-300 h-12 rounded"></button>
     </div>
   );
 };
