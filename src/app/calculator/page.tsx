@@ -1,11 +1,20 @@
-'use client';
-import React, { useState, useRef } from 'react';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import html2canvas from 'html2canvas';
-import InvestmentForm from '../ui/calculator/InvestmentForm';
-import Results from '../ui/calculator/Results';
-import LoadingSkeleton from '../ui/skeletons';
-import { CalculationResult } from '../ui/calculator/types';
+"use client";
+import React, { useState, useRef } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import html2canvas from "html2canvas";
+import InvestmentForm from "../ui/calculator/InvestmentForm";
+import Results from "../ui/calculator/Results";
+import LoadingSkeleton from "../ui/skeletons";
+import { CalculationResult } from "../ui/calculator/types";
 
 ChartJS.register(
   CategoryScale,
@@ -18,9 +27,15 @@ ChartJS.register(
 );
 
 const CompoundInterestCalculator: React.FC = () => {
-  const [initialInvestment, setInitialInvestment] = useState<number | string>(1000);
-  const [monthlyContribution, setMonthlyContribution] = useState<number | string>(100);
-  const [annualInterestRate, setAnnualInterestRate] = useState<number | string>(7);
+  const [initialInvestment, setInitialInvestment] = useState<number | string>(
+    1000
+  );
+  const [monthlyContribution, setMonthlyContribution] = useState<
+    number | string
+  >(100);
+  const [annualInterestRate, setAnnualInterestRate] = useState<number | string>(
+    7
+  );
   const [years, setYears] = useState<number | string>(10);
   const [results, setResults] = useState<CalculationResult | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,54 +51,58 @@ const CompoundInterestCalculator: React.FC = () => {
       for (let year = 0; year <= years; year++) {
         dataPoints.push({
           year,
-          balance: Math.round(balance)
+          balance: Math.round(balance),
         });
 
         for (let month = 0; month < 12; month++) {
           balance += monthlyContribution;
-          balance *= (1 + monthlyRate);
+          balance *= 1 + monthlyRate;
         }
       }
 
       setResults({
         finalBalance: Math.round(balance),
-        totalContributions: initialInvestment + (monthlyContribution * 12 * years),
-        totalInterest: Math.round(balance - initialInvestment - (monthlyContribution * 12 * years)),
-        dataPoints
+        totalContributions:
+          initialInvestment + monthlyContribution * 12 * years,
+        totalInterest: Math.round(
+          balance - initialInvestment - monthlyContribution * 12 * years
+        ),
+        dataPoints,
       });
       setIsLoading(false);
     });
   };
 
-
   const chartData = {
-    labels: results?.dataPoints.map(point => point.year) || [],
+    labels: results?.dataPoints.map((point) => point.year) || [],
     datasets: [
       {
-        label: 'Balance',
-        data: results?.dataPoints.map(point => point.balance) || [],
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }
-    ]
+        label: "Balance",
+        data: results?.dataPoints.map((point) => point.balance) || [],
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
   };
 
   const chartOptions = {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
       title: {
         display: true,
-        text: 'Compound Interest Growth',
+        text: "Compound Interest Growth",
       },
     },
   };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Compound Interest Calculator</h1>
+      <h1 className="text-3xl font-bold mb-6 text-center">
+        Compound Interest Calculator
+      </h1>
       <InvestmentForm
         initialInvestment={initialInvestment}
         setInitialInvestment={setInitialInvestment}
@@ -97,20 +116,17 @@ const CompoundInterestCalculator: React.FC = () => {
       />
       {isLoading ? (
         <LoadingSkeleton />
+      ) : results ? (
+        <Results
+          results={results}
+          chartData={chartData}
+          chartOptions={chartOptions}
+        />
       ) : (
-        results ? (
-          <Results
-            results={results}
-            chartData={chartData}
-            chartOptions={chartOptions}
-          />
-        ) : (
-          <LoadingSkeleton />
-        )
+        <LoadingSkeleton />
       )}
     </div>
   );
 };
-
 
 export default CompoundInterestCalculator;
