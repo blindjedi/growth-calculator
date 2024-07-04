@@ -24,9 +24,9 @@ const Results: React.FC<ResultsProps> = ({
         <p className="text-center text-xl">Final Balance: ${results.finalBalance.toLocaleString()}</p>
         <p className="text-center text-xl">Total Contributions: ${results.totalContributions.toLocaleString()}</p>
         <p className="text-center text-xl">Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
-        <div className="mt-12 h-80">
-          <Line options={chartOptions} data={chartData} />
-        </div>
+          <div className="w-full h-auto flex justify-center my-6">
+            <Line options={chartOptions} data={chartData} />
+          </div>
       </div>
 
       <button
