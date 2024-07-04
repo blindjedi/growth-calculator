@@ -55,16 +55,6 @@ const CompoundInterestCalculator: React.FC = () => {
     });
   };
 
-  const generateShareableImage = async () => {
-    if (shareableRef.current) {
-      const canvas = await html2canvas(shareableRef.current);
-      const image = canvas.toDataURL("image/png");
-      const link = document.createElement('a');
-      link.href = image;
-      link.download = 'compound-interest-results.png';
-      link.click();
-    }
-  };
 
   const chartData = {
     labels: results?.dataPoints.map(point => point.year) || [],
@@ -113,7 +103,6 @@ const CompoundInterestCalculator: React.FC = () => {
             results={results}
             chartData={chartData}
             chartOptions={chartOptions}
-            generateShareableImage={generateShareableImage}
           />
         ) : (
           <LoadingSkeleton />

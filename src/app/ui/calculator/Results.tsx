@@ -6,14 +6,12 @@ interface ResultsProps {
   results: CalculationResult | null;
   chartData: any;
   chartOptions: any;
-  generateShareableImage: () => void;
 }
 
 const Results: React.FC<ResultsProps> = ({
   results,
   chartData,
   chartOptions,
-  generateShareableImage,
 }) => {
   if (!results) return null;
 
@@ -28,13 +26,6 @@ const Results: React.FC<ResultsProps> = ({
             <Line options={chartOptions} data={chartData} />
           </div>
       </div>
-
-      <button
-        onClick={generateShareableImage}
-        className="mt-4 w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
-      >
-        Generate Shareable Image
-      </button>
     </>
   );
 };
