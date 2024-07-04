@@ -63,7 +63,7 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({
       </div>
       <button
         onClick={onCalculate}
-        className="col-span-2 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        className="col-span-1 md:col-span-2 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
       >
         Calculate
       </button>
