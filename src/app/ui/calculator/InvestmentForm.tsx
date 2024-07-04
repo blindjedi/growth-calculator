@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import clsx from 'clsx';
 
 interface InvestmentFormProps {
   initialInvestment: number | string;
@@ -93,18 +94,28 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({
       </div>
       <button
         onClick={onCalculate}
-        className={`col-span-1 md:col-span-2 w-full p-2 rounded ${
-          !!initialInvestmentError ||
-          !!monthlyContributionError ||
-          !!annualInterestRateError ||
-          !!yearsError ||
-          initialInvestment === '' ||
-          monthlyContribution === '' ||
-          annualInterestRate === '' ||
-          years === ''
-            ? 'bg-gray-500 text-gray-300 cursor-not-allowed'
-            : 'bg-blue-500 text-white hover:bg-blue-600'
-        }`}
+        className={clsx(
+          "col-span-1 md:col-span-2 w-full p-2 rounded", // Base Classes
+          {
+            // Conditional Classes
+            "bg-gray-500 text-gray-300 cursor-not-allowed": !!initialInvestmentError ||
+            !!monthlyContributionError ||
+            !!annualInterestRateError ||
+            !!yearsError ||
+            initialInvestment === '' ||
+            monthlyContribution === '' ||
+            annualInterestRate === '' ||
+            years === '',
+            "bg-blue-500 text-white hover:bg-blue-600": !initialInvestmentError &&
+            !monthlyContributionError &&
+            !annualInterestRateError &&
+            !yearsError &&
+            initialInvestment !== '' &&
+            monthlyContribution !== '' &&
+            annualInterestRate !== '' &&
+            years !== ''
+          }
+        )}
         disabled={
           !!initialInvestmentError ||
           !!monthlyContributionError ||
