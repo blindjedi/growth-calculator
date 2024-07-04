@@ -31,7 +31,7 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    setter: (value: number | string) => void,
+    setter: (valuae: number | string) => void,
     setError: (message: string) => void
   ) => {
     const value = event.target.value;
