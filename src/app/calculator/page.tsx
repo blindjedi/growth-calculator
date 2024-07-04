@@ -70,7 +70,7 @@ const CompoundInterestCalculator: React.FC = () => {
         dataPoints,
       });
       setIsLoading(false);
-    }, 1000); // Add delay to simulate loading
+    }, 500); // Add delay to simulate loading
   };
 
   const chartData = {
