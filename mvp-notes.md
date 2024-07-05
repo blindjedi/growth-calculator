@@ -37,25 +37,17 @@
 
    - Allow users to share their projections or insights
 
-5. Mobile App
-
-   - iOS and Android versions
-
-6. Notification System
-
-   - Reminders to invest or check progress
-
-7. Integration with Financial Institutions
+5. Integration with Financial Institutions
 
    - Pull real-time data for more accurate projections
 
-8. Monte Carlo Simulations
+6. Monte Carlo Simulations
 
    - Show range of possible outcomes based on historical market data
 
-9. Tax Implications Calculator
+7. Tax Implications Calculator
 
    - Factor in taxes for more realistic projections
 
-10. Goal Setting and Tracking
+8.  Goal Setting and Tracking
     - Set financial goals and track progress over time
