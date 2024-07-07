@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoadingSkeleton: React.FC = () => {
+const LoadingSkeleton = () => {
   return (
     <div className="animate-pulse">
       <div className="mt-6">
@@ -15,5 +15,3 @@ const LoadingSkeleton: React.FC = () => {
 };
 
 export default LoadingSkeleton;
-
-  

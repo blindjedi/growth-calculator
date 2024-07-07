@@ -1,19 +1,7 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
 
-interface InvestmentFormProps {
-  initialInvestment: number | string;
-  setInitialInvestment: (value: number | string) => void;
-  monthlyContribution: number | string;
-  setMonthlyContribution: (value: number | string) => void;
-  annualInterestRate: number | string;
-  setAnnualInterestRate: (value: number | string) => void;
-  years: number | string;
-  setYears: (value: number | string) => void;
-  onCalculate: () => void;
-}
-
-const InvestmentForm: React.FC<InvestmentFormProps> = ({
+const InvestmentForm = ({
   initialInvestment,
   setInitialInvestment,
   monthlyContribution,
@@ -24,15 +12,15 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({
   setYears,
   onCalculate,
 }) => {
-  const [initialInvestmentError, setInitialInvestmentError] = useState<string>('');
-  const [monthlyContributionError, setMonthlyContributionError] = useState<string>('');
-  const [annualInterestRateError, setAnnualInterestRateError] = useState<string>('');
-  const [yearsError, setYearsError] = useState<string>('');
+  const [initialInvestmentError, setInitialInvestmentError] = useState('');
+  const [monthlyContributionError, setMonthlyContributionError] = useState('');
+  const [annualInterestRateError, setAnnualInterestRateError] = useState('');
+  const [yearsError, setYearsError] = useState('');
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    setter: (valuae: number | string) => void,
-    setError: (message: string) => void
+    event,
+    setter,
+    setError
   ) => {
     const value = event.target.value;
     if (value === '') {

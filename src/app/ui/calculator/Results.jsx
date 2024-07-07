@@ -1,18 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { CalculationResult } from './types';
 
-interface ResultsProps {
-  results: CalculationResult | null;
-  chartData: any;
-  chartOptions: any;
-}
-
-const Results: React.FC<ResultsProps> = ({
-  results,
-  chartData,
-  chartOptions,
-}) => {
+const Results = ({ results, chartData, chartOptions }) => {
   if (!results) return null;
 
   return (
@@ -22,9 +11,9 @@ const Results: React.FC<ResultsProps> = ({
         <p className="text-center text-xl">Final Balance: ${results.finalBalance.toLocaleString()}</p>
         <p className="text-center text-xl">Total Contributions: ${results.totalContributions.toLocaleString()}</p>
         <p className="text-center text-xl">Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
-          <div className="w-full h-auto flex justify-center my-6">
-            <Line options={chartOptions} data={chartData} />
-          </div>
+        <div className="w-full h-auto flex justify-center my-6">
+          <Line options={chartOptions} data={chartData} />
+        </div>
       </div>
     </>
   );

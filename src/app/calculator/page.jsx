@@ -13,7 +13,6 @@ import {
 import InvestmentForm from '../ui/calculator/InvestmentForm';
 import Results from '../ui/calculator/Results';
 import LoadingSkeleton from '../ui/skeletons';
-import { CalculationResult } from '../ui/calculator/types';
 
 ChartJS.register(
   CategoryScale,
@@ -25,19 +24,13 @@ ChartJS.register(
   Legend
 );
 
-const CompoundInterestCalculator: React.FC = () => {
-  const [initialInvestment, setInitialInvestment] = useState<number | string>(
-    1000
-  );
-  const [monthlyContribution, setMonthlyContribution] = useState<
-    number | string
-  >(100);
-  const [annualInterestRate, setAnnualInterestRate] = useState<number | string>(
-    7
-  );
-  const [years, setYears] = useState<number | string>(10);
-  const [results, setResults] = useState<CalculationResult | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+const CompoundInterestCalculator = () => {
+  const [initialInvestment, setInitialInvestment] = useState(1000);
+  const [monthlyContribution, setMonthlyContribution] = useState(100);
+  const [annualInterestRate, setAnnualInterestRate] = useState(7);
+  const [years, setYears] = useState(10);
+  const [results, setResults] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const calculateCompoundInterest = () => {
     setIsLoading(true);
@@ -49,7 +42,7 @@ const CompoundInterestCalculator: React.FC = () => {
 
       let balance = initialInvestmentNum;
       const monthlyRate = annualInterestRateNum / 12 / 100;
-      const dataPoints: { year: number; balance: number }[] = [];
+      const dataPoints = [];
 
       for (let year = 0; year <= yearsNum; year++) {
         dataPoints.push({
@@ -89,7 +82,7 @@ const CompoundInterestCalculator: React.FC = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'top',
         labels: {
           color: 'rgb(255, 255, 255)', // Adjust according to your theme
         },
@@ -136,7 +129,7 @@ const CompoundInterestCalculator: React.FC = () => {
           color: 'rgb(255, 255, 255)', // Adjust according to your theme
         },
         ticks: {
-          callback: function(value: number) {
+          callback: function(value) {
             if (value >= 1000000) {
               return (value / 1000000).toFixed(1) + 'M'; // Convert to millions
             } else if (value >= 1000) {
@@ -161,7 +154,6 @@ const CompoundInterestCalculator: React.FC = () => {
       easing: 'easeOutBounce', // Animation easing effect
     },
   };
-  
 
   return (
     <div className="max-w-4xl mx-auto p-4 min-h-screen flex flex-col">
