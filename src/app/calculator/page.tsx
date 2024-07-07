@@ -90,13 +90,78 @@ const CompoundInterestCalculator: React.FC = () => {
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          color: 'rgb(255, 255, 255)', // Adjust according to your theme
+        },
       },
       title: {
         display: true,
         text: 'Compound Interest Growth',
+        color: 'rgb(255, 255, 255)', // Adjust according to your theme
+        font: {
+          size: 18,
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+            return label;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Years',
+          color: 'rgb(255, 255, 255)', // Adjust according to your theme
+        },
+        ticks: {
+          color: 'rgb(255, 255, 255)', // Adjust according to your theme
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)', // Adjust according to your theme
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Amount ($)',
+          color: 'rgb(255, 255, 255)', // Adjust according to your theme
+        },
+        ticks: {
+          callback: function(value: number) {
+            if (value >= 1000000) {
+              return (value / 1000000).toFixed(1) + 'M'; // Convert to millions
+            } else if (value >= 1000) {
+              return (value / 1000).toFixed(1) + 'K'; // Convert to thousands
+            }
+            return value;
+          },
+          color: 'rgb(255, 255, 255)', // Adjust according to your theme
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)', // Adjust according to your theme
+        },
       },
     },
+    elements: {
+      line: {
+        borderDash: [5, 5], // Dashed line style
+      },
+    },
+    animation: {
+      duration: 1000, // Animation duration in milliseconds
+      easing: 'easeOutBounce', // Animation easing effect
+    },
   };
+  
 
   return (
     <div className="max-w-4xl mx-auto p-4 min-h-screen flex flex-col">
