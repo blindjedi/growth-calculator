@@ -92,7 +92,7 @@ const CompoundInterestCalculator = () => {
       },
       title: {
         display: true,
-        text: 'Compound Interest Growth',
+        text: 'Investment Growth Over Time',
         font: {
           size: 24, // Increased font size for title
         },
