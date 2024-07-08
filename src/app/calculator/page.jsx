@@ -83,14 +83,10 @@ const CompoundInterestCalculator = () => {
     plugins: {
       legend: {
         position: 'top',
-        labels: {
-          color: 'rgb(255, 255, 255)', // Adjust according to your theme
-        },
       },
       title: {
         display: true,
         text: 'Compound Interest Growth',
-        color: 'rgb(255, 255, 255)', // Adjust according to your theme
         font: {
           size: 18,
         },
@@ -113,20 +109,18 @@ const CompoundInterestCalculator = () => {
         title: {
           display: true,
           text: 'Years',
-          color: 'rgb(255, 255, 255)', // Adjust according to your theme
         },
         ticks: {
-          color: 'rgb(255, 255, 255)', // Adjust according to your theme
+          // Additional tick settings if needed
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', // Adjust according to your theme
+          // Additional grid settings if needed
         },
       },
       y: {
         title: {
           display: true,
           text: 'Amount ($)',
-          color: 'rgb(255, 255, 255)', // Adjust according to your theme
         },
         ticks: {
           callback: function(value) {
@@ -137,10 +131,9 @@ const CompoundInterestCalculator = () => {
             }
             return value;
           },
-          color: 'rgb(255, 255, 255)', // Adjust according to your theme
         },
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)', // Adjust according to your theme
+          // Additional grid settings if needed
         },
       },
     },
