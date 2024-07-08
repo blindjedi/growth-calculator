@@ -37,13 +37,13 @@ const Results = ({ results, chartData, chartOptions }) => {
       <div className="mt-8">
         <h2 className="text-3xl font-bold mb-4 text-center">Yearly Breakdown</h2>
         <div className="overflow-x-auto w-full">
-          <table className="table w-full">
+          <table className="table-auto w-full text-center text-sm md:text-lg">
             <thead>
               <tr>
-                <th className="border-b-2 border-gray-300">Year</th>
-                <th className="border-b-2 border-gray-300">Balance</th>
-                <th className="border-b-2 border-gray-300">Contributions</th>
-                <th className="border-b-2 border-gray-300">Interest</th>
+                <th className="border-b-2 border-gray-300 px-2 py-1">Year</th>
+                <th className="border-b-2 border-gray-300 px-2 py-1">Balance</th>
+                <th className="border-b-2 border-gray-300 px-2 py-1">Contributions</th>
+                <th className="border-b-2 border-gray-300 px-2 py-1">Interest</th>
               </tr>
             </thead>
             <tbody>
@@ -52,10 +52,10 @@ const Results = ({ results, chartData, chartOptions }) => {
                 const interest = getInterest(point.balance, contributions);
                 return (
                   <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
-                    <td className="px-4 py-2">{point.year + 1}</td> {/* Adjusted year to start from 1 */}
-                    <td className="px-4 py-2">${point.balance.toLocaleString()}</td>
-                    <td className="px-4 py-2">${contributions.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                    <td className="px-4 py-2">${interest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td className="px-2 py-1 whitespace-nowrap">{point.year + 1}</td> {/* Adjusted year to start from 1 */}
+                    <td className="px-2 py-1 whitespace-nowrap">${point.balance.toLocaleString()}</td>
+                    <td className="px-2 py-1 whitespace-nowrap">${contributions.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td className="px-2 py-1 whitespace-nowrap">${interest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                   </tr>
                 );
               })}
