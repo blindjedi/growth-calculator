@@ -80,15 +80,21 @@ const CompoundInterestCalculator = () => {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false, // Ensures the chart takes up more space
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          font: {
+            size: 14, // Increased font size for legend
+          },
+        },
       },
       title: {
         display: true,
         text: 'Compound Interest Growth',
         font: {
-          size: 18,
+          size: 24, // Increased font size for title
         },
       },
       tooltip: {
@@ -109,20 +115,28 @@ const CompoundInterestCalculator = () => {
         title: {
           display: true,
           text: 'Years',
+          font: {
+            size: 16, // Increased font size for x-axis title
+          },
         },
         ticks: {
-          // Additional tick settings if needed
-        },
-        grid: {
-          // Additional grid settings if needed
+          font: {
+            size: 14, // Increased font size for x-axis ticks
+          },
         },
       },
       y: {
         title: {
           display: true,
           text: 'Amount ($)',
+          font: {
+            size: 16, // Increased font size for y-axis title
+          },
         },
         ticks: {
+          font: {
+            size: 14, // Increased font size for y-axis ticks
+          },
           callback: function(value) {
             if (value >= 1000000) {
               return (value / 1000000).toFixed(1) + 'M'; // Convert to millions
@@ -131,9 +145,6 @@ const CompoundInterestCalculator = () => {
             }
             return value;
           },
-        },
-        grid: {
-          // Additional grid settings if needed
         },
       },
     },
@@ -147,6 +158,7 @@ const CompoundInterestCalculator = () => {
       easing: 'easeOutBounce', // Animation easing effect
     },
   };
+  
 
   return (
     <div className="max-w-4xl mx-auto p-4 min-h-screen flex flex-col">
