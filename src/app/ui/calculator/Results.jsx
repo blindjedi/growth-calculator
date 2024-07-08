@@ -4,6 +4,14 @@ import { Line } from 'react-chartjs-2';
 const Results = ({ results, chartData, chartOptions }) => {
   if (!results) return null;
 
+  const getContributions = (index) => {
+    return results.totalContributions / results.dataPoints.length * (index + 1);
+  };
+
+  const getInterest = (balance, contributions) => {
+    return balance - contributions;
+  };
+
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-bold mb-4 text-center">Results</h2>
@@ -25,6 +33,35 @@ const Results = ({ results, chartData, chartOptions }) => {
       </div>
       <div className="w-full h-96 flex justify-center my-6">
         <Line options={chartOptions} data={chartData} />
+      </div>
+      <div className="mt-8">
+        <h2 className="text-3xl font-bold mb-4 text-center">Yearly Breakdown</h2>
+        <div className="overflow-x-auto w-full">
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th className="border-b-2 border-gray-300">Year</th>
+                <th className="border-b-2 border-gray-300">Balance</th>
+                <th className="border-b-2 border-gray-300">Contributions</th>
+                <th className="border-b-2 border-gray-300">Interest</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.dataPoints.map((point, index) => {
+                const contributions = getContributions(index);
+                const interest = getInterest(point.balance, contributions);
+                return (
+                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+                    <td className="px-4 py-2">{point.year + 1}</td> {/* Adjusted year to start from 1 */}
+                    <td className="px-4 py-2">${point.balance.toLocaleString()}</td>
+                    <td className="px-4 py-2">${contributions.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td className="px-4 py-2">${interest.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
