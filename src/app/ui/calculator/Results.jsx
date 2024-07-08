@@ -7,7 +7,7 @@ const Results = ({ results, chartData, chartOptions }) => {
   return (
     <div className="mt-8">
       <h2 className="text-3xl font-bold mb-4 text-center">Results</h2>
-      <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+      <div className="bg-gray-100 p-4 rounded-lg shadow-md dark:bg-gray-800">
         <p className="text-center text-2xl mb-2">Final Balance: ${results.finalBalance.toLocaleString()}</p>
         <p className="text-center text-2xl mb-2">Total Contributions: ${results.totalContributions.toLocaleString()}</p>
         <p className="text-center text-2xl mb-6">Total Interest Earned: ${results.totalInterest.toLocaleString()}</p>
