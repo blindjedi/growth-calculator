@@ -45,21 +45,30 @@ const CompoundInterestCalculator = () => {
       const dataPoints = [];
 
       for (let year = 0; year <= yearsNum; year++) {
-        dataPoints.push({
-          year,
-          balance: Math.round(balance),
-        });
-
         for (let month = 0; month < 12; month++) {
           balance += monthlyContributionNum;
           balance *= 1 + monthlyRate;
         }
+
+        // Push the balance at the end of each year
+        dataPoints.push({
+          year,
+          balance: Math.round(balance),
+        });
       }
 
+      const finalBalance = Math.round(balance);
+      const totalContributions = initialInvestmentNum + monthlyContributionNum * 12 * yearsNum;
+      const totalInterest = finalBalance - totalContributions;
+
+      // uncomment for debugging results data points and chart data points
+      // console.log('Data Points:', dataPoints);
+      // console.log('Final Balance:', finalBalance);
+
       setResults({
-        finalBalance: Math.round(balance),
-        totalContributions: initialInvestmentNum + monthlyContributionNum * 12 * yearsNum,
-        totalInterest: Math.round(balance - initialInvestmentNum - monthlyContributionNum * 12 * yearsNum),
+        finalBalance,
+        totalContributions,
+        totalInterest,
         dataPoints,
       });
       setIsLoading(false);
