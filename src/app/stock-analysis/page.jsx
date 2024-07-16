@@ -161,7 +161,7 @@ const TeslaPerformanceChart = () => {
           
           <div className="text-center">
             <p className="mb-2 text-lg">Tesla&apos;s stock has staged a dramatic recovery, surging by 40.01% over the past month! 🚀</p>
-            <p className="font-semibold text-xl">Showcasing Tesla&apos;s resilience and strong market position.</p>
+            <p className="font-semibold text-xl">Showcasing Teslas resilience and strong market position.</p>
           </div>
           
           <div className="mt-6 text-center text-sm opacity-75">
